@@ -29,9 +29,27 @@ var play = function play(e){
                 if(e.keyCode == 37){
                     direction = 4;
                 }
-            }
+           }
         }
     }
     console.log("direction: " + direction);
+    var move = function move(){
+        if(direction==1){
+            y=y-20;
+        }else{
+            if(direction==2){
+                x=x+20;
+            }else{
+                if(direction==3){
+                    y=y+20;
+                }else{
+                    if(direction==4){
+                        x=x-20;
+                    }
+                }
+            }
+        }
+    }
+    move();
 }
 document.onkeydown = play;
