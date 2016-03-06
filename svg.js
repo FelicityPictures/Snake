@@ -10,6 +10,7 @@ var direction;
 */
 
 var play = function play(e){
+    var IntervalID;
     console.log(e.keyCode);
         var r = document.createElementNS("http://www.w3.org/2000/svg","rect");
         r.setAttribute("x",currentX);
@@ -35,21 +36,24 @@ var play = function play(e){
     console.log("direction: " + direction);
     var move = function move(){
         if(direction==1){
-            y=y-20;
+            currentY=currentY-20;
         }else{
             if(direction==2){
-                x=x+20;
+                currentX=currentX+20;
             }else{
                 if(direction==3){
-                    y=y+20;
+                    currentY=currentY+20;
                 }else{
                     if(direction==4){
-                        x=x-20;
+                        currentX=currentX-20;
                     }
                 }
             }
         }
+        r.setAttribute("x",currentX);
+        r.setAttribute("y",currentY);
     }
-    move();
+    IntervalID = clearInterval(IntervalID);
+    IntervalID = window.setInterval(move,100);
 }
 document.onkeydown = play;
