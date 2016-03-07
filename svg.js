@@ -1,59 +1,56 @@
 var c = document.getElementById("canvas");
+
+var snakeWidth = 20;
+
 var currentX = 200;
 var currentY = 200;
-var direction;
-/*
-  direction 1 = up (38)
-  direction 2 = right (39)
-  direction 3 = down (40)
-  direction 4 = left (37)
-*/
+
+var direction = -1;
 
 var play = function play(e){
+
     var IntervalID;
-    console.log(e.keyCode);
-        var r = document.createElementNS("http://www.w3.org/2000/svg","rect");
-        r.setAttribute("x",currentX);
-        r.setAttribute("y",currentY);
-        r.setAttribute("width",20);
-        r.setAttribute("height",20);
-        c.appendChild(r);
-    if (e.keyCode == 38) {
-        direction=1;
-    }else{
-        if(e.keyCode == 39){
-            direction = 2;
-        }else{
-            if(e.keyCode == 40){
-                direction = 3;
-            }else{
-                if(e.keyCode == 37){
-                    direction = 4;
-                }
-           }
-        }
-    }
+
+    var r = document.createElementNS("http://www.w3.org/2000/svg","rect");
+
+    r.setAttribute("x",currentX);
+    r.setAttribute("y",currentY);
+    r.setAttribute("width",20);
+    r.setAttribute("height",20);
+    c.appendChild(r);
+
+    // Directions range from 0 to 3
+    direction = 40 - e.keyCode;
+    // 0 = down
+    // 1 = right
+    // 2 = up
+    // 3 = left
     console.log("direction: " + direction);
+
     var move = function move(){
-        if(direction==1){
-            currentY=currentY-20;
-        }else{
-            if(direction==2){
-                currentX=currentX+20;
-            }else{
-                if(direction==3){
-                    currentY=currentY+20;
-                }else{
-                    if(direction==4){
-                        currentX=currentX-20;
-                    }
-                }
-            }
-        }
+	switch (direction) {
+	case 0:
+	    currentY = currentY + snakeWidth;
+	    break;
+	case 1:
+	    currentX = currentX + snakeWidth;
+	    break;
+	case 2:
+	    currentY = currentY - snakeWidth;
+	    break;
+	case 3:
+	    currentX = currentX - snakeWidth;
+	    break;
+	default:
+	    break;
+	}
+
         r.setAttribute("x",currentX);
         r.setAttribute("y",currentY);
     }
+
     IntervalID = clearInterval(IntervalID);
     IntervalID = window.setInterval(move,100);
 }
+
 document.onkeydown = play;
