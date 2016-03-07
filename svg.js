@@ -36,6 +36,7 @@ var play = function play(e){
 	    currentX = currentX + snakeWidth;
 	    break;
 	case 2:
+
 	    currentY = currentY - snakeWidth;
 	    break;
 	case 3:
