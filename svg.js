@@ -2,6 +2,7 @@ var c = document.getElementById("canvas");
 var currentX = 200;
 var currentY = 200;
 var direction;
+var r = document.createElementNS("http://www.w3.org/2000/svg","rect");
 /*
   direction 1 = up (38)
   direction 2 = right (39)
@@ -12,12 +13,11 @@ var direction;
 var play = function play(e){
     var IntervalID;
     console.log(e.keyCode);
-        var r = document.createElementNS("http://www.w3.org/2000/svg","rect");
-        r.setAttribute("x",currentX);
-        r.setAttribute("y",currentY);
-        r.setAttribute("width",20);
-        r.setAttribute("height",20);
-        c.appendChild(r);
+    r.setAttribute("x",currentX);
+    r.setAttribute("y",currentY);
+    r.setAttribute("width",20);
+    r.setAttribute("height",20);
+    c.appendChild(r);
     if (e.keyCode == 38) {
         direction=1;
     }else{
@@ -30,11 +30,12 @@ var play = function play(e){
                 if(e.keyCode == 37){
                     direction = 4;
                 }
-           }
+            }
         }
     }
     console.log("direction: " + direction);
     var move = function move(){
+	IntervalID = clearInterval(IntervalID);
         if(direction==1){
             currentY=currentY-20;
         }else{
@@ -53,7 +54,6 @@ var play = function play(e){
         r.setAttribute("x",currentX);
         r.setAttribute("y",currentY);
     }
-    IntervalID = clearInterval(IntervalID);
     IntervalID = window.setInterval(move,100);
 }
 document.onkeydown = play;
