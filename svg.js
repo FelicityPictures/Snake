@@ -7,6 +7,20 @@ var currentY = 200;
 
 var direction = -1;
 
+var updateDirection = function updateDirection(e) {
+    // Directions range from 0 to 3
+    // 0 = down
+    // 1 = right
+    // 2 = up
+    // 3 = left
+    var oldDirection = direction;
+    direction = 40 - e.keyCode;
+    if (direction < 0 || direction > 3) {
+	direction = oldDirection;
+    }
+    console.log("direction: " + direction);
+}
+
 var play = function play(e){
 
     var IntervalID;
@@ -18,14 +32,6 @@ var play = function play(e){
     r.setAttribute("width",20);
     r.setAttribute("height",20);
     c.appendChild(r);
-
-    // Directions range from 0 to 3
-    direction = 40 - e.keyCode;
-    // 0 = down
-    // 1 = right
-    // 2 = up
-    // 3 = left
-    console.log("direction: " + direction);
 
     var move = function move(){
 	switch (direction) {
@@ -54,4 +60,5 @@ var play = function play(e){
     IntervalID = window.setInterval(move,100);
 }
 
-document.onkeydown = play;
+document.onkeydown = updateDirection;
+play();
