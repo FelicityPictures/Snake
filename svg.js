@@ -83,10 +83,18 @@ var makeFood = function(){
     console.log("food");
     foodX = Math.floor(Math.random() * (width - foodWidth)/20)*20;
     foodY = Math.floor(Math.random() * (height - foodWidth)/20)*20;
+    for (var i=0; i<segment.length; i++){
+	if (parseInt(segment[i].getAttribute("x")) == foodX &&
+	    parseInt(segment[i].getAttribute("y")) == foodY){
+	    makeFood();
+	    break;
+	}
+    }
     food.setAttribute("x", foodX);
     food.setAttribute("y", foodY);
     food.setAttribute("width", foodWidth);
     food.setAttribute("height", foodWidth);
+    food.setAttribute("fill", "red");
     c.appendChild(food);
 }
 
