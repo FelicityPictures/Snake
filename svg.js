@@ -9,8 +9,8 @@ console.log(height);
 var snakeWidth = 20;
 var foodWidth = 20;
 
-var currentX = 200;
-var currentY = 200;
+var currentX = [200];
+var currentY = [200];
 var foodX;
 var foodY;
 
@@ -40,8 +40,8 @@ var play = function play(e) {
 
     var IntervalID;
 
-    segment[0].setAttribute("x",currentX);
-    segment[0].setAttribute("y",currentY);
+    segment[0].setAttribute("x",currentX[0]);
+    segment[0].setAttribute("y",currentY[0]);
     segment[0].setAttribute("width", snakeWidth);
     segment[0].setAttribute("height", snakeWidth);
     c.appendChild(segment[0]);
@@ -49,31 +49,34 @@ var play = function play(e) {
     var move = function move(){
 	switch (direction) {
 	case 0:
-	    currentY = currentY + snakeWidth;
+	    currentY[0] = currentY[0] + snakeWidth;
 	    break;
 	case 1:
-	    currentX = currentX + snakeWidth;
+	    currentX[0] = currentX[0] + snakeWidth;
 	    break;
 	case 2:
-	    currentY = currentY - snakeWidth;
+	    currentY[0] = currentY[0] - snakeWidth;
 	    break;
 	case 3:
-	    currentX = currentX - snakeWidth;
+	    currentX[0] = currentX[0] - snakeWidth;
 	    break;
 	default:
 	    break;
 	}
 
-	if (currentX < 0 - snakeWidth || currentY < 0 - snakeWidth ||
-	    currentX > width || currentY > height) {
+	if (currentX[0] < 0 - snakeWidth || currentY[0] < 0 - snakeWidth ||
+	    currentX[0] > width || currentY[0] > height) {
 	    console.log("you died");
 	    clearInterval(IntervalID);
 	    document.onkeydown = lmao;//sets keydown to do nothing
 	    return;
+	} else if(parseInt(segment[0].getAttribute("x")) == foodX &&
+		  parseInt(segment[0].getAttribute("y")) == foodY){
+	    //remove food and add to segment 
 	}
 
-        r.setAttribute("x",currentX);
-        r.setAttribute("y",currentY);
+        r.setAttribute("x",currentX[0]);
+        r.setAttribute("y",currentY[0]);
     }
     makeFood();
     IntervalID = window.setInterval(move,100);
