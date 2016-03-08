@@ -7,14 +7,18 @@ console.log(width);
 console.log(height);
 
 var snakeWidth = 20;
+var foodWidth = 20;
 
 var currentX = 200;
 var currentY = 200;
+var foodX;
+var foodY;
 
 var direction = -1;
 
 var r = document.createElementNS("http://www.w3.org/2000/svg","rect");
 var segment = [r];
+var food = document.createElementNS("http://www.w3.org/2000/svg","rect");
 
 var lmao = function lmao() {};
 
@@ -38,8 +42,8 @@ var play = function play(e) {
 
     segment[0].setAttribute("x",currentX);
     segment[0].setAttribute("y",currentY);
-    segment[0].setAttribute("width",20);
-    segment[0].setAttribute("height",20);
+    segment[0].setAttribute("width", snakeWidth);
+    segment[0].setAttribute("height", snakeWidth);
     c.appendChild(segment[0]);
 
     var move = function move(){
@@ -71,8 +75,19 @@ var play = function play(e) {
         r.setAttribute("x",currentX);
         r.setAttribute("y",currentY);
     }
-
+    makeFood();
     IntervalID = window.setInterval(move,100);
+}
+
+var makeFood = function(){
+    console.log("food");
+    foodX = Math.floor(Math.random() * (width - foodWidth)/20)*20;
+    foodY = Math.floor(Math.random() * (height - foodWidth)/20)*20;
+    food.setAttribute("x", foodX);
+    food.setAttribute("y", foodY);
+    food.setAttribute("width", foodWidth);
+    food.setAttribute("height", foodWidth);
+    c.appendChild(food);
 }
 
 document.onkeydown = updateDirection;
