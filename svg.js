@@ -9,15 +9,16 @@ console.log(height);
 var snakeWidth = 20;
 var foodWidth = 20;
 
-var currentX = [200];
-var currentY = [200];
+var currentX = 200;
+var currentY = 200;
 var foodX;
 var foodY;
 
 var direction = -1;
 
 var r = document.createElementNS("http://www.w3.org/2000/svg","rect");
-var segment = [r];
+var s = document.createElementNS("http://www.w3.org/2000/svg","rect");
+var segment = [r, s];
 var food = document.createElementNS("http://www.w3.org/2000/svg","rect");
 
 var lmao = function lmao() {};
@@ -40,59 +41,58 @@ var play = function play(e) {
 
     var IntervalID;
 
-    segment[0].setAttribute("x",currentX[0]);
-    segment[0].setAttribute("y",currentY[0]);
+    segment[0].setAttribute("x",currentX);
+    segment[0].setAttribute("y",currentY);
     segment[0].setAttribute("width", snakeWidth);
     segment[0].setAttribute("height", snakeWidth);
     c.appendChild(segment[0]);
+    segment[1].setAttribute("x",180);
+    segment[1].setAttribute("y",200);
+    segment[1].setAttribute("width", snakeWidth);
+    segment[1].setAttribute("height", snakeWidth);
+    c.appendChild(segment[1]);
 
-    var move = function move(){
+    var move = function move() {
+	segment.unshift(segment.pop());
 	switch (direction) {
 	case 0:
-	    currentY[0] = currentY[0] + snakeWidth;
+	    currentY = currentY + snakeWidth;
 	    break;
 	case 1:
-	    currentX[0] = currentX[0] + snakeWidth;
+	    currentX = currentX + snakeWidth;
 	    break;
 	case 2:
-	    currentY[0] = currentY[0] - snakeWidth;
+	    currentY = currentY - snakeWidth;
 	    break;
 	case 3:
-	    currentX[0] = currentX[0] - snakeWidth;
+	    currentX = currentX - snakeWidth;
 	    break;
 	default:
 	    break;
 	}
 
-	if (currentX[0] < 0 - snakeWidth || currentY[0] < 0 - snakeWidth ||
-	    currentX[0] > width || currentY[0] > height) {
+	if (currentX < 0 - snakeWidth || currentY < 0 - snakeWidth ||
+	    currentX > width || currentY > height) {
 	    console.log("you died");
 	    clearInterval(IntervalID);
 	    document.onkeydown = lmao;//sets keydown to do nothing
 	    return;
-	} else if(parseInt(segment[0].getAttribute("x")) == foodX &&
-		  parseInt(segment[0].getAttribute("y")) == foodY){
+	} else if (parseInt(segment[0].getAttribute("x")) == foodX &&
+		  parseInt(segment[0].getAttribute("y")) == foodY) {
 	    //remove food and add to segment 
 	}
 
-        r.setAttribute("x",currentX[0]);
-        r.setAttribute("y",currentY[0]);
+        segment[0].setAttribute("x",currentX);
+        segment[0].setAttribute("y",currentY);
     }
     makeFood();
     IntervalID = window.setInterval(move,100);
 }
 
-var makeFood = function(){
+var makeFood = function() {
     console.log("food");
-    foodX = Math.floor(Math.random() * (width - foodWidth)/20)*20;
-    foodY = Math.floor(Math.random() * (height - foodWidth)/20)*20;
-    for (var i=0; i<segment.length; i++){
-	if (parseInt(segment[i].getAttribute("x")) == foodX &&
-	    parseInt(segment[i].getAttribute("y")) == foodY){
-	    makeFood();
-	    break;
-	}
-    }
+    foodX = Math.floor(Math.random() * (width - foodWidth) / 20) * 20;
+    foodY = Math.floor(Math.random() * (height - foodWidth) / 20) * 20; 
     food.setAttribute("x", foodX);
     food.setAttribute("y", foodY);
     food.setAttribute("width", foodWidth);
