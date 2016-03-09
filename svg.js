@@ -37,6 +37,17 @@ var updateDirection = function updateDirection(e) {
     console.log("direction: " + direction);
 }
 
+var omNomNom = function omNomNom() {
+    if (currentX == foodX && currentY == foodY) {
+	c.removeChild(c.lastChild);
+	makeSegment();
+	makeFood();
+	return true;
+    } else {
+	return false;
+    }
+};
+
 var play = function play(e) {
 
     var IntervalID;
@@ -53,7 +64,10 @@ var play = function play(e) {
     c.appendChild(segment[1]);
 
     var move = function move() {
-	segment.unshift(segment.pop());
+	var q = segment.pop();
+	console.log(q);
+	segment.unshift(q);
+	var w = omNomNom();
 	switch (direction) {
 	case 0:
 	    currentY = currentY + snakeWidth;
@@ -70,20 +84,14 @@ var play = function play(e) {
 	default:
 	    break;
 	}
-
+	
 	if (currentX < 0 - snakeWidth || currentY < 0 - snakeWidth ||
 	    currentX > width || currentY > height) {
 	    console.log("you died");
 	    clearInterval(IntervalID);
 	    document.onkeydown = lmao;//sets keydown to do nothing
 	    return;
-	} else if (parseInt(segment[0].getAttribute("x")) == foodX &&
-		  parseInt(segment[0].getAttribute("y")) == foodY) {
-	    c.removeChild(c.lastChild)
-	    makeSegment();
-	    makeFood();
 	}
-
         segment[0].setAttribute("x",currentX);
         segment[0].setAttribute("y",currentY);
     }
@@ -106,10 +114,12 @@ var makeFood = function() {
 var makeSegment = function(){
     console.log("segment");
     var seg = document.createElementNS("http://www.w3.org/2000/svg","rect");
-    seg.setAttribute("x", currentX + 20);
-    seg.setAttribute("y", currentY);
+    seg.setAttribute("x", foodX);
+    seg.setAttribute("y", foodY);
     seg.setAttribute("width", snakeWidth);
     seg.setAttribute("height", snakeWidth);
+    currentX = foodX;
+    currentY = foodY;
     segment.unshift(seg);
     c.appendChild(seg);
 }
