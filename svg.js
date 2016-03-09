@@ -41,13 +41,13 @@ var play = function play(e) {
 
     var IntervalID;
 
-    segment[0].setAttribute("x",currentX);
-    segment[0].setAttribute("y",currentY);
+    segment[0].setAttribute("x", currentX);
+    segment[0].setAttribute("y", currentY);
     segment[0].setAttribute("width", snakeWidth);
     segment[0].setAttribute("height", snakeWidth);
     c.appendChild(segment[0]);
-    segment[1].setAttribute("x",180);
-    segment[1].setAttribute("y",200);
+    segment[1].setAttribute("x", 180);
+    segment[1].setAttribute("y", 200);
     segment[1].setAttribute("width", snakeWidth);
     segment[1].setAttribute("height", snakeWidth);
     c.appendChild(segment[1]);
@@ -79,7 +79,9 @@ var play = function play(e) {
 	    return;
 	} else if (parseInt(segment[0].getAttribute("x")) == foodX &&
 		  parseInt(segment[0].getAttribute("y")) == foodY) {
-	    //remove food and add to segment 
+	    c.removeChild(c.lastChild)
+	    makeSegment();
+	    makeFood();
 	}
 
         segment[0].setAttribute("x",currentX);
@@ -99,6 +101,17 @@ var makeFood = function() {
     food.setAttribute("height", foodWidth);
     food.setAttribute("fill", "red");
     c.appendChild(food);
+}
+
+var makeSegment = function(){
+    console.log("segment");
+    var seg = document.createElementNS("http://www.w3.org/2000/svg","rect");
+    seg.setAttribute("x", currentX + 20);
+    seg.setAttribute("y", currentY);
+    seg.setAttribute("width", snakeWidth);
+    seg.setAttribute("height", snakeWidth);
+    segment.unshift(seg);
+    c.appendChild(seg);
 }
 
 document.onkeydown = updateDirection;
