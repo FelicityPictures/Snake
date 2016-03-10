@@ -64,10 +64,6 @@ var play = function play(e) {
     c.appendChild(segment[1]);
 
     var move = function move() {
-	var q = segment.pop();
-	console.log(q);
-	segment.unshift(q);
-	var w = omNomNom();
 	switch (direction) {
 	case 0:
 	    currentY = currentY + snakeWidth;
@@ -83,8 +79,11 @@ var play = function play(e) {
 	    break;
 	default:
 	    break;
-	}
-	
+	}	
+	var q = segment.pop();
+	console.log(q);
+	segment.unshift(q);
+	var w = omNomNom();
 	if (currentX < 0 - snakeWidth || currentY < 0 - snakeWidth ||
 	    currentX > width || currentY > height) {
 	    console.log("you died");
@@ -96,7 +95,7 @@ var play = function play(e) {
         segment[0].setAttribute("y",currentY);
     }
     makeFood();
-    IntervalID = window.setInterval(move,100);
+    IntervalID = window.setInterval(move,500);
 }
 
 var makeFood = function() {
