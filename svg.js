@@ -33,7 +33,7 @@ var updateDirection = function updateDirection(e) {
     var oldDirection = direction;
     direction = 40 - e.keyCode;
     if (direction < 0 || direction > 3 || (direction + 2) % 4 == oldDirection) {
-	direction = oldDirection;
+	      direction = oldDirection;
     }
     console.log("direction: " + direction);
 
@@ -41,34 +41,40 @@ var updateDirection = function updateDirection(e) {
 
 var omNomNom = function omNomNom() {
     if (currentX == foodX && currentY == foodY) {
-	c.removeChild(c.lastChild);
-	makeSegment();
-	makeFood();
-	return true;
+	      c.removeChild(c.lastChild);
+	      makeSegment();
+	      makeFood();
+	      return true;
     } else {
-	return false;
+	      return false;
     }
 };
 
 var wallCollision = function wallCollision(e) {
     if (currentX < 0 - snakeWidth || currentY < 0 - snakeWidth ||
-	currentX > width || currentY > height) {
-	console.log("you died");
-	clearInterval(IntervalID);
-	document.onkeydown = lmao;//sets keydown to do nothing
-	return;
+	      currentX > width || currentY > height) {
+        died();
+	      console.log("you died");
+	      clearInterval(IntervalID);
+	      document.onkeydown = lmao;//sets keydown to do nothing
+	      return;
     }
 }
 
 var bodyCollision = function bodyCollision() {
     for (var i = 1; i < segment.length; i++) {
-	if (currentX == segment[i].getAttribute("x") && currentY == segment[i].getAttribute("y")){
-	    console.log("you died");
-	    clearInterval(IntervalID);
-	    document.onkeydown = lmao;//sets keydown to do nothing
-	    return;
-	}
+	      if (currentX == segment[i].getAttribute("x") && currentY == segment[i].getAttribute("y")){
+            died();
+	          console.log("you died");
+	          clearInterval(IntervalID);
+	          document.onkeydown = lmao;//sets keydown to do nothing
+	          return;
+	      }
     }
+}
+
+var died = function died(){
+    c.className = "dead";
 }
 
 var play = function play(e) {
@@ -77,36 +83,37 @@ var play = function play(e) {
     segment[0].setAttribute("y", currentY);
     segment[0].setAttribute("width", snakeWidth);
     segment[0].setAttribute("height", snakeWidth);
+    segment[0].setAttribute("fill", "#00FF00");
     c.appendChild(segment[0]);
 
     var move = function move() {
-	switch (direction) {
-	case 0:
-	    currentY = currentY + snakeWidth;
-	    break;
-	case 1:
-	    currentX = currentX + snakeWidth;
-	    break;
-	case 2:
-	    currentY = currentY - snakeWidth;
-	    break;
-	case 3:
-	    currentX = currentX - snakeWidth;
-	    break;
-	default:
-	    break;
-	}
-	if (!omNomNom()){
-	    segment.unshift(segment.pop());
+	      switch (direction) {
+	      case 0:
+	          currentY = currentY + snakeWidth;
+	          break;
+	      case 1:
+	          currentX = currentX + snakeWidth;
+	          break;
+	      case 2:
+	          currentY = currentY - snakeWidth;
+	          break;
+	      case 3:
+	          currentX = currentX - snakeWidth;
+	          break;
+	      default:
+	          break;
+	      }
+	      if (!omNomNom()){
+	          segment.unshift(segment.pop());
             segment[0].setAttribute("x",currentX);
             segment[0].setAttribute("y",currentY);
-	}
-	wallCollision();
-	bodyCollision();
+	      }
+	      wallCollision();
+	      bodyCollision();
     }
     
     makeFood();
-    IntervalID = window.setInterval(move,200);
+    IntervalID = window.setInterval(move,100);
 }
 
 var makeFood = function() {
@@ -114,11 +121,11 @@ var makeFood = function() {
     foodX = Math.floor(Math.random() * (width - foodWidth) / 20) * 20;
     foodY = Math.floor(Math.random() * (height - foodWidth) / 20) * 20;
     for (var i=0; i<segment.length; i++){
- 	if (parseInt(segment[i].getAttribute("x")) == foodX &&
- 	    parseInt(segment[i].getAttribute("y")) == foodY){
- 	    makeFood();
- 	    break;
- 	}
+ 	      if (parseInt(segment[i].getAttribute("x")) == foodX &&
+ 	          parseInt(segment[i].getAttribute("y")) == foodY){
+ 	          makeFood();
+ 	          break;
+ 	      }
     }
     food.setAttribute("x", foodX);
     food.setAttribute("y", foodY);
@@ -135,6 +142,7 @@ var makeSegment = function(){
     seg.setAttribute("y", foodY);
     seg.setAttribute("width", snakeWidth);
     seg.setAttribute("height", snakeWidth);
+    seg.setAttribute("fill", "#00FF00");
     currentX = foodX;
     currentY = foodY;
     segment.unshift(seg);

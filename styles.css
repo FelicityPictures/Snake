@@ -1,0 +1,35 @@
+.snake{
+    background-color: #000000;
+}
+/*
+.title{
+    margin: 0;
+    position: float;
+    top: 10%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+color: #00FF00
+}
+*/
+
+.container{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.c{
+    background-color: #000000;
+    border: 5px solid #00FF00;
+    border-style: dashed;
+}
+
+.dead{
+
+    background-color: #000000;
+    border: 5px solid red;
+}
