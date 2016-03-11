@@ -24,12 +24,11 @@ color: #00FF00
 
 .c{
     background-color: #000000;
-    border: 5px solid #00FF00;
+    border: 3px solid #00FF00;
     border-style: dashed;
 }
 
 .dead{
-
     background-color: #000000;
     border: 5px solid red;
 }

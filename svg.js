@@ -52,10 +52,10 @@ var omNomNom = function omNomNom() {
 var wallCollision = function wallCollision(e) {
     if (currentX < 0 - snakeWidth || currentY < 0 - snakeWidth ||
 	      currentX > width || currentY > height) {
-        died();
 	      console.log("you died");
 	      clearInterval(IntervalID);
 	      document.onkeydown = lmao;//sets keydown to do nothing
+      //  died();
 	      return;
     }
 }
@@ -66,6 +66,7 @@ var bodyCollision = function bodyCollision() {
             console.log("you died");
             clearInterval(IntervalID);
             document.onkeydown = lmao;//sets keydown to do nothing
+            died();
             return;
         }
     }
@@ -73,6 +74,7 @@ var bodyCollision = function bodyCollision() {
 
 var died = function died(){
     c.className = "dead";
+    console.log("done");
 }
 
 var play = function play(e) {
