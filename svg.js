@@ -46,8 +46,7 @@ var omNomNom = function omNomNom() {
 	      makeFood();
 	      return true;
     } else {
-	      return false;
-    }
+	      return false;    }
 };
 
 var wallCollision = function wallCollision(e) {
@@ -63,13 +62,12 @@ var wallCollision = function wallCollision(e) {
 
 var bodyCollision = function bodyCollision() {
     for (var i = 1; i < segment.length; i++) {
-	      if (currentX == segment[i].getAttribute("x") && currentY == segment[i].getAttribute("y")){
-            died();
-	          console.log("you died");
-	          clearInterval(IntervalID);
-	          document.onkeydown = lmao;//sets keydown to do nothing
-	          return;
-	      }
+        if (currentX == segment[i].getAttribute("x") && currentY == segment[i].getAttribute("y")) {
+            console.log("you died");
+            clearInterval(IntervalID);
+            document.onkeydown = lmao;//sets keydown to do nothing
+            return;
+        }
     }
 }
 
@@ -87,31 +85,31 @@ var play = function play(e) {
     c.appendChild(segment[0]);
 
     var move = function move() {
-	      switch (direction) {
-	      case 0:
-	          currentY = currentY + snakeWidth;
-	          break;
-	      case 1:
-	          currentX = currentX + snakeWidth;
-	          break;
-	      case 2:
-	          currentY = currentY - snakeWidth;
-	          break;
-	      case 3:
-	          currentX = currentX - snakeWidth;
-	          break;
-	      default:
-	          break;
-	      }
-	      if (!omNomNom()){
-	          segment.unshift(segment.pop());
+        switch (direction) {
+            case 0:
+                currentY = currentY + snakeWidth;
+                break;
+            case 1:
+                currentX = currentX + snakeWidth;
+                break;
+            case 2:
+                currentY = currentY - snakeWidth;
+                break;
+            case 3:
+                currentX = currentX - snakeWidth;
+                break;
+            default:
+                break;
+        }
+        if (!omNomNom()) {
+            segment.unshift(segment.pop());
             segment[0].setAttribute("x",currentX);
             segment[0].setAttribute("y",currentY);
-	      }
-	      wallCollision();
-	      bodyCollision();
+        }
+        wallCollision();
+        bodyCollision();
     }
-    
+
     makeFood();
     IntervalID = window.setInterval(move,100);
 }
@@ -120,12 +118,12 @@ var makeFood = function() {
     console.log("food");
     foodX = Math.floor(Math.random() * (width - foodWidth) / 20) * 20;
     foodY = Math.floor(Math.random() * (height - foodWidth) / 20) * 20;
-    for (var i=0; i<segment.length; i++){
- 	      if (parseInt(segment[i].getAttribute("x")) == foodX &&
- 	          parseInt(segment[i].getAttribute("y")) == foodY){
- 	          makeFood();
- 	          break;
- 	      }
+    for (var i=0; i<segment.length; i++) {
+        if (parseInt(segment[i].getAttribute("x")) == foodX &&
+                parseInt(segment[i].getAttribute("y")) == foodY) {
+            makeFood();
+            break;
+        }
     }
     food.setAttribute("x", foodX);
     food.setAttribute("y", foodY);
@@ -135,7 +133,7 @@ var makeFood = function() {
     c.appendChild(food);
 }
 
-var makeSegment = function(){
+var makeSegment = function() {
     console.log("segment");
     var seg = document.createElementNS("http://www.w3.org/2000/svg","rect");
     seg.setAttribute("x", foodX);
