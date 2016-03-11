@@ -6,6 +6,8 @@ height = parseInt(height.substring(0, height.length - 2));
 console.log(width);
 console.log(height);
 
+var IntervalID;
+
 var snakeWidth = 20;
 var foodWidth = 20;
 
@@ -34,6 +36,7 @@ var updateDirection = function updateDirection(e) {
 	direction = oldDirection;
     }
     console.log("direction: " + direction);
+
 }
 
 var omNomNom = function omNomNom() {
@@ -47,9 +50,28 @@ var omNomNom = function omNomNom() {
     }
 };
 
-var play = function play(e) {
+var wallCollision = function wallCollision(e) {
+    if (currentX < 0 - snakeWidth || currentY < 0 - snakeWidth ||
+	currentX > width || currentY > height) {
+	console.log("you died");
+	clearInterval(IntervalID);
+	document.onkeydown = lmao;//sets keydown to do nothing
+	return;
+    }
+}
 
-    var IntervalID;
+var bodyCollision = function bodyCollision() {
+    for (var i = 1; i < segment.length; i++) {
+	if (currentX == segment[i].getAttribute("x") && currentY == segment[i].getAttribute("y")){
+	    console.log("you died");
+	    clearInterval(IntervalID);
+	    document.onkeydown = lmao;//sets keydown to do nothing
+	    return;
+	}
+    }
+}
+
+var play = function play(e) {
 
     segment[0].setAttribute("x", currentX);
     segment[0].setAttribute("y", currentY);
@@ -79,14 +101,10 @@ var play = function play(e) {
             segment[0].setAttribute("x",currentX);
             segment[0].setAttribute("y",currentY);
 	}
-	if (currentX < 0 - snakeWidth || currentY < 0 - snakeWidth ||
-	    currentX > width || currentY > height) {
-	    console.log("you died");
-	    clearInterval(IntervalID);
-	    document.onkeydown = lmao;//sets keydown to do nothing
-	    return;
-	}
+	wallCollision();
+	bodyCollision();
     }
+    
     makeFood();
     IntervalID = window.setInterval(move,200);
 }
