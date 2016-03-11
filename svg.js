@@ -30,7 +30,7 @@ var updateDirection = function updateDirection(e) {
     // 3 = left
     var oldDirection = direction;
     direction = 40 - e.keyCode;
-    if (direction < 0 || direction > 3) {
+    if (direction < 0 || direction > 3 || (direction + 2) % 4 == oldDirection) {
 	direction = oldDirection;
     }
     console.log("direction: " + direction);
@@ -94,7 +94,14 @@ var play = function play(e) {
 var makeFood = function() {
     console.log("food");
     foodX = Math.floor(Math.random() * (width - foodWidth) / 20) * 20;
-    foodY = Math.floor(Math.random() * (height - foodWidth) / 20) * 20; 
+    foodY = Math.floor(Math.random() * (height - foodWidth) / 20) * 20;
+    for (var i=0; i<segment.length; i++){
+ 	if (parseInt(segment[i].getAttribute("x")) == foodX &&
+ 	    parseInt(segment[i].getAttribute("y")) == foodY){
+ 	    makeFood();
+ 	    break;
+ 	}
+    }
     food.setAttribute("x", foodX);
     food.setAttribute("y", foodY);
     food.setAttribute("width", foodWidth);
